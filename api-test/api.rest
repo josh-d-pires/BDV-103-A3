@@ -1,0 +1,31 @@
+### Book API Tests
+### Base URL
+@baseUrl = http://localhost:3000
+
+### 1. Create a new book
+# @name createBook
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+    "name": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "description": "A novel about the American Dream set in the Jazz Age",
+    "price": 12.99,
+    "image": "https://example.com/gatsby.jpg"
+}
+
+### Store the book ID from the response
+@bookId = {{createBook.response.body.id}}
+
+###
+
+### 2. List all books (verify the book was created)
+GET {{baseUrl}}/books
+
+###
+
+### 3. Delete the book
+DELETE {{baseUrl}}/books/{{bookId}}
+
+###
