@@ -6,6 +6,28 @@ const deleteRouter = new Router();
 
 // Delete a book by ID
 deleteRouter.delete('/books/:id', async (ctx) => {
+  try {
+    const db=getDatabase(),
+          id=ctx.params.id
+    if (!ObjectId.isValid(id)) {
+      ctx.status=400
+      ctx.body={error:'invalid id'}
+      return
+    }
+    const res=await db.collection('books').deleteOne(
+      {_id:new ObjectId(id)}
+    )
+    if (res.deletedCount==0) {
+      ctx.status=404
+      ctx.body={error:`${id} was not found`}
+      return
+    }
+    ctx.status=200
+    ctx.body={id:id}
+  } catch (err) {
+    ctx.status=500
+    ctx.body={error:`delete failed: ${err}`}
+  }
     // TODO: Implement DELETE /books/:id endpoint to remove a book
     //
     // Requirements:
@@ -25,8 +47,8 @@ deleteRouter.delete('/books/:id', async (ctx) => {
     // - Use db.collection('books').deleteOne({ _id: new ObjectId(id) })
     // - Check result.deletedCount to see if a document was actually deleted
 
-    ctx.status = 501;
-    ctx.body = { error: 'DELETE /books/:id not implemented' };
+    // ctx.status = 501;
+    // ctx.body = { error: 'DELETE /books/:id not implemented' };
 });
 
 export default deleteRouter;

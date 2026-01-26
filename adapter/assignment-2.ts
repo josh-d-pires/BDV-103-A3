@@ -1,3 +1,4 @@
+import { resolve } from "dns";
 import assignment1 from "./assignment-1";
 
 export type BookID = string;
@@ -16,6 +17,35 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
 }
 
 async function createOrUpdateBook(book: Book): Promise<BookID> {
+  if (book.id) {
+    let res=await fetch(`http://localhost:3000/books/${book.id}`,{
+      method: 'PUT',
+      headers: { "Content-Type":"application/json" },
+      body: JSON.stringify(book)
+    })
+    if (res.ok) {
+      console.log(`${book.name} [${book.id}] updated.`)
+      return book.id
+    } else {
+      console.log(await res.text())
+      throw new Error(`updating "${book}" failed.`)
+    }
+  } else {
+    let res=await fetch(`http://localhost:3000/books`,{
+      method: 'POST',
+      headers: { "Content-Type":"application/json" },
+      body: JSON.stringify(book)
+    })
+    if (res.ok) {
+      const newBook=await res.json() as Book
+      console.log(`${book.name} [${newBook.id}] created.`)
+      return newBook.id as BookID
+    } else {
+      console.warn(await res.text())
+      throw new Error(`creating "${book}" failed.`)
+    }
+  }
+
     // TODO: Implement this function to create or update a book via the API
     //
     // Requirements:
@@ -34,7 +64,12 @@ async function createOrUpdateBook(book: Book): Promise<BookID> {
     // - Check result.ok to determine if the request was successful
     // - Parse the response with result.json() to get the id
 
-    throw new Error("Not implemented");
+  // if (res.ok) {
+  //   return (await res.json() as Book[])
+  // } else {
+  //   console.warn(await res.text())
+  //   throw new Error(`fetching "${query}" failed.`)
+  // }
 }
 
 async function removeBook(bookId: BookID): Promise<void> {
@@ -42,15 +77,26 @@ async function removeBook(bookId: BookID): Promise<void> {
     //
     // Requirements:
     // - Send a DELETE request to http://localhost:3000/books/{bookId}
+    let res=await fetch(`http://localhost:3000/books/${bookId}`,{
+      method: 'DELETE',
+      headers: { "Content-Type":"application/json" }
+    })
     // - On success (status 200 or 204), return without throwing
     // - On failure, throw an Error with a descriptive message
+    console.log(res)
+    if (res.ok) {
+      console.log(`${bookId} deleted.`)
+      return bookId as BookID
+    } else {
+      throw new Error(`deleting "${bookId}" failed.`)
+    }
     //
     // Hints:
     // - Use the fetch API with method: 'DELETE'
     // - A successful delete typically returns status 204 (No Content)
     // - Check result.ok or result.status to determine success
 
-    throw new Error("Not implemented");
+    // throw new Error("Not implemented");
 }
 
 const assignment = "assignment-2";
