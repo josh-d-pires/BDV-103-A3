@@ -1,38 +1,32 @@
-# name: CI/CD
-# run-name: ${{ github.action }} lint and type-check triggered on ${{ github.event_name }} by ${{ github.actor }}
-# on: [push, pull_request]
-# jobs:
-#   identify:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - run: ls
-#   lint-and-fix:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - run: echo "linting project with ESLint."
-#       - run: npm run lint-fix
-#         working-directory: ${{ github.workspace }}
-#   type-check:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - run: echo "type-checking project with tsc."
-#       - run: npm run ts-test
-#         working-directory: ${{ github.workspace }}
-name: List files example
-
-on: [push]
-
+name: CI/CD
+run-name: ${{ github.action }} lint and type-check triggered on ${{ github.event_name }} by ${{ github.actor }}
+on: [push, pull_request]
 jobs:
-  explore-files:
+  lint-and-fix:
     runs-on: ubuntu-latest
     steps:
-      - name: List files before checkout
-        run: ls -la # Use -la for long format including hidden files
-        
-      - name: Check out repository code
-        uses: actions/checkout@v4 # It's best practice to use the checkout action
-
-      - name: List files after checkout
-        run: |
-          echo "Listing files in the workspace directory:"
-          ls -la ${{ github.workspace }} # Use the github.workspace context
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - run: echo "linting project with ESLint."
+      - run: npm run lint-fix
+        working-directory: ${{ github.workspace }}
+  type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - run: echo "type-checking project with tsc."
+      - run: npm run ts-test
+        working-directory: ${{ github.workspace }}
