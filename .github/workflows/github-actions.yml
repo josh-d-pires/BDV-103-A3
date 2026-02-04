@@ -6,11 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "linting project with ESLint."
-      - working-directory: ${{ github.workspace }}
-        run: npm run lint-fix
+      - run: |
+          cd.. 
+          npm run lint-fix
+        # working-directory: ${{ github.workspace }}
   type-check:
     runs-on: ubuntu-latest
     steps:
       - run: echo "type-checking project with tsc."
-      - working-directory: ${{ github.workspace }}
-        run: npm run ts-test
+      - run: npm run ts-test
+        working-directory: ${{ github.workspace }}
