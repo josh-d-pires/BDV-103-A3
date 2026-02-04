@@ -1,6 +1,17 @@
 import { test, expect } from '@playwright/test';
+// import { BinaryOperatorToken } from 'typescript';
+import { Book } from '../adapter/assignment-1';
 
 const API_URL = 'http://localhost:3000';
+
+interface Book {
+    id?: string;
+//     name: string;
+//     author: string;
+//     description: string;
+//     price: number;
+//     image: string;
+}
 
 test.describe('Books API', () => {
     let createdBookId: string;
@@ -39,7 +50,7 @@ test.describe('Books API', () => {
         test('should return created book in list', async ({ request }) => {
             const response = await request.get(`${API_URL}/books`);
             const books = await response.json();
-            const createdBook = books.find((b: any) => b.id === createdBookId);
+            const createdBook = books.find((b: Book) => b.id === createdBookId);
             expect(createdBook).toBeDefined();
             expect(createdBook.name).toBe('Test Book');
             expect(createdBook.author).toBe('Test Author');
@@ -132,7 +143,7 @@ test.describe('Books API', () => {
         test('should return updated book in list', async ({ request }) => {
             const response = await request.get(`${API_URL}/books`);
             const books = await response.json();
-            const updatedBook = books.find((b: any) => b.id === createdBookId);
+            const updatedBook = books.find((b: Book) => b.id === createdBookId);
             expect(updatedBook).toBeDefined();
             expect(updatedBook.name).toBe('Updated Book');
             expect(updatedBook.author).toBe('Updated Author');
@@ -202,7 +213,7 @@ test.describe('Books API', () => {
         test('should not return deleted book in list', async ({ request }) => {
             const response = await request.get(`${API_URL}/books`);
             const books = await response.json();
-            const deletedBook = books.find((b: any) => b.id === createdBookId);
+            const deletedBook = books.find((b: Book) => b.id === createdBookId);
             expect(deletedBook).toBeUndefined();
         });
     });
