@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "lint": "npx eslint ./src/server.ts",
-    "fmt": "tsc ./src/server.ts --noEmit",
+    "fmt": "tsc --noEmit",
     "start-server": "tsx ./src/server.ts",
     "test": "playwright test"
   },
@@ -28,6 +28,7 @@
     "@types/koa": "^3.0.1",
     "@types/koa__cors": "^5.0.1",
     "@types/koa__router": "^12.0.5",
+    "@types/koa-bodyparser": "^4.3.13",
     "@types/koa-qs": "^2.0.4",
     "@types/node": "^25.0.3",
     "eslint": "^9.39.2",

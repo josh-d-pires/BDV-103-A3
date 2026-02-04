@@ -1,5 +1,7 @@
+// eslint-disable-next-line no-undef
 use('mcmasterful-books');
 
+// eslint-disable-next-line no-undef
 db.books.insertMany([
   {
     "name": "Giant's Bread",

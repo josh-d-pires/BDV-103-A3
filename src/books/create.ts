@@ -13,6 +13,7 @@ interface BookInput {
     image: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function validateBookInput(body: any): { valid: boolean; error?: string; book?: BookInput } {
     // TODO: Implement input validation for book data
     //
@@ -66,7 +67,7 @@ createRouter.post('/books', async (ctx) => {
     //
     // Requirements:
     // - Validate the request body using validateBookInput()
-    let test=validateBookInput(ctx.request.body)
+    const test=validateBookInput(ctx.request.body)
 
     // - If validation fails, return status 400 with { error: "message" }
     if (!test.valid) {
@@ -106,7 +107,7 @@ createRouter.post('/books', async (ctx) => {
     //   - Use insertOne to create a new book
     //   - Return status 201 with { id: insertedId.toString() }
     // - Handle errors with status 500 and { error: "message" }
-      let res=await db.collection('books').insertOne({
+      const res=await db.collection('books').insertOne({
         name:book?.name,
         author:book?.author,
         description:book?.description,
@@ -132,7 +133,7 @@ createRouter.post('/books', async (ctx) => {
 // Update an existing book
 createRouter.put('/books/:id', async (ctx) => {
   try {
-    let test=validateBookInput(ctx.request.body)
+    const test=validateBookInput(ctx.request.body)
     if (!test.valid) {
       ctx.status=400
       ctx.body={error:test.error}

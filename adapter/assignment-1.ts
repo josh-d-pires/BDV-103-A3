@@ -1,5 +1,5 @@
-import { resourceLimits } from 'worker_threads';
-import books from './../mcmasteful-book-list.json';
+// import { resourceLimits } from 'worker_threads';
+// import books from '../mcmasteful-book-list.json';
 
 export interface Book {
   name: string,
@@ -21,7 +21,7 @@ async function listBooks(filters?: Array<{ from?: number, to?: number }>): Promi
     return result
   }).join('&') ?? ''
 
-  let res=await fetch(`http://localhost:3000/books?${query}`)
+  const res=await fetch(`http://localhost:3000/books?${query}`)
   if (res.ok) {
     return (await res.json() as Book[])
   } else {

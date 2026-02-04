@@ -21,6 +21,7 @@ export interface Filter {
 // If multiple filters are provided, any book that matches at least one of them should be returned
 // Within a single filter, a book would need to match all the given conditions
 async function listBooks (filters?: Filter[]): Promise<Book[]> {
+  console.log(filters)
   throw new Error("Todo")
 }
 

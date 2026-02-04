@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 db = db.getSiblingDB("mcmasterful-books");
 db.createCollection("books");
 

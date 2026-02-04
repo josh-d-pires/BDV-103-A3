@@ -1,4 +1,3 @@
-import { resolve } from "dns";
 import assignment1 from "./assignment-1";
 
 export type BookID = string;
@@ -18,7 +17,7 @@ async function listBooks(filters?: Array<{from?: number, to?: number}>) : Promis
 
 async function createOrUpdateBook(book: Book): Promise<BookID> {
   if (book.id) {
-    let res=await fetch(`http://localhost:3000/books/${book.id}`,{
+    const res=await fetch(`http://localhost:3000/books/${book.id}`,{
       method: 'PUT',
       headers: { "Content-Type":"application/json" },
       body: JSON.stringify(book)
@@ -31,7 +30,7 @@ async function createOrUpdateBook(book: Book): Promise<BookID> {
       throw new Error(`updating "${book}" failed.`)
     }
   } else {
-    let res=await fetch(`http://localhost:3000/books`,{
+    const res=await fetch(`http://localhost:3000/books`,{
       method: 'POST',
       headers: { "Content-Type":"application/json" },
       body: JSON.stringify(book)
@@ -77,7 +76,7 @@ async function removeBook(bookId: BookID): Promise<void> {
     //
     // Requirements:
     // - Send a DELETE request to http://localhost:3000/books/{bookId}
-    let res=await fetch(`http://localhost:3000/books/${bookId}`,{
+    const res=await fetch(`http://localhost:3000/books/${bookId}`,{
       method: 'DELETE',
       headers: { "Content-Type":"application/json" }
     })
@@ -86,7 +85,7 @@ async function removeBook(bookId: BookID): Promise<void> {
     console.log(res)
     if (res.ok) {
       console.log(`${bookId} deleted.`)
-      return bookId as BookID
+      return
     } else {
       throw new Error(`deleting "${bookId}" failed.`)
     }

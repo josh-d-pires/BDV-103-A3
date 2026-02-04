@@ -28,7 +28,7 @@ listRouter.get('/books', async (ctx) => {
   }
 });
 
-function validateFilters(filters: any): boolean {
+function validateFilters(filters: unknown): boolean {
   // Check if filters exist and are an array
   if (!filters || !Array.isArray(filters)) {
     return false;
