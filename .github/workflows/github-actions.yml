@@ -6,10 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "linting project with ESLint."
-      - run: |
-          cd.. 
-          npm run lint-fix
-        # working-directory: ${{ github.workspace }}
+      - run: npm run lint-fix
+        working-directory: ${{ github.workspace }}
   type-check:
     runs-on: ubuntu-latest
     steps:
