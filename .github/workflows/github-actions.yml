@@ -5,8 +5,7 @@ jobs:
   identify:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.workspace }}
-      - run: echo $GITHUB_WORKSPACE
+      - run: ls
   lint-and-fix:
     runs-on: ubuntu-latest
     steps:
