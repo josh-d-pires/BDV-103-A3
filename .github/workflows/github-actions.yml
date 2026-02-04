@@ -2,10 +2,14 @@ name: CI/CD
 run-name: ${{ github.action }} lint and type-check triggered on ${{ github.event_name }} by ${{ github.actor }}
 on: [push, pull_request]
 jobs:
-  lint-and-fix:
+  identify:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.workspace }}
+      - run: echo $GITHUB.WORKSPACE
+  lint-and-fix:
+    runs-on: ubuntu-latest
+    steps:
       - run: echo "linting project with ESLint."
       - run: npm run lint-fix
         working-directory: ${{ github.workspace }}
