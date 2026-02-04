@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.workspace }}
-      - run: echo $GITHUB.WORKSPACE
+      - run: echo $GITHUB_WORKSPACE
   lint-and-fix:
     runs-on: ubuntu-latest
     steps:
