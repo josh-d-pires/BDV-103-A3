@@ -4,15 +4,6 @@ import { Book } from '../adapter/assignment-1';
 
 const API_URL = 'http://localhost:3000';
 
-interface Book {
-    id?: string;
-//     name: string;
-//     author: string;
-//     description: string;
-//     price: number;
-//     image: string;
-}
-
 test.describe('Books API', () => {
     let createdBookId: string;
 

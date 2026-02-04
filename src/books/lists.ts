@@ -58,7 +58,7 @@ function validateFilters(filters: unknown): boolean {
   });
 }
 
-async function getBooksFromDatabase(): Promise<(Book & { id: string })[]> {
+async function getBooksFromDatabase(): Promise<Book[]> {
   const db = getDatabase();
   const books = await db.collection('books').find({}).toArray();
   return books.map(doc => ({

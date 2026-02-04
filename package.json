@@ -4,8 +4,9 @@
   "description": "This is a template repository for the first assignment in BVD 103 at McMaster Continuing Education.",
   "main": "src/server.ts",
   "scripts": {
-    "lint": "npx eslint ./src/server.ts",
-    "fmt": "tsc --noEmit",
+    "lint": "npx eslint",
+    "lint-fix": "npx eslint --fix",
+    "ts-test": "tsc --noEmit",
     "start-server": "tsx ./src/server.ts",
     "test": "playwright test"
   },

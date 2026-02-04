@@ -2,6 +2,7 @@
 // import books from '../mcmasteful-book-list.json';
 
 export interface Book {
+  id?: string,
   name: string,
   author: string,
   description: string,

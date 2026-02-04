@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import previous_assignment from './assignment-3'
 
 export type BookID = string
