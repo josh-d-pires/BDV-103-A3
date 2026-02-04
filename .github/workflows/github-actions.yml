@@ -2,6 +2,10 @@ name: CI/CD
 run-name: ${{ github.action }} lint and type-check triggered on ${{ github.event_name }} by ${{ github.actor }}
 on: [push, pull_request]
 jobs:
+  locate-us:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls
   lint-and-fix:
     runs-on: ubuntu-latest
     steps:
