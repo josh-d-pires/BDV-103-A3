@@ -1,14 +1,18 @@
 name: CI/CD
-run-name: ${{ github.action }} lint and type-check triggered on ${{ github.event_name }} by ${{ github.actor }}
+run-name: "${{ github.action }} lint and type-check triggered on: ${{ github.event_name }} by: ${{ github.actor }}"
 on: [push, pull_request]
 jobs:
   lint-and-fix:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "linting project with ESLint."
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - run: npm install
       - run: npm run lint-fix
   type-check:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "type-checking project with tsc."
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - run: npm install
       - run: npm run ts-test
