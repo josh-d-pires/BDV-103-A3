@@ -1,26 +1,25 @@
 import Router from '@koa/router';
 import { Book } from '../../adapter/assignment-1';
 import { getDatabase } from '../db';
+// import { constrainedMemory } from 'node:process';
 
 const listRouter = new Router();
 
 listRouter.get('/books', async (ctx) => {
+  console.log(ctx.query.filters)
   const filters = ctx.query.filters as Array<{ from?: string, to?: string }> | undefined;
 
   try {
     let bookList = await getBooksFromDatabase();
 
-    // Uncomment to Apply filters
     if (filters && Array.isArray(filters) && filters.length > 0) {
       if (!validateFilters(filters)) {
         ctx.status = 400;
         ctx.body = { error: 'Invalid filters. Each filter must have valid "from" and "to" numbers where from <= to.' };
         return;
       }
-
       bookList = filterBooks(bookList, filters);
     }
-
     ctx.body = bookList;
   } catch (error) {
     ctx.status = 500;

@@ -7,7 +7,7 @@
     "lint": "npx eslint",
     "lint-fix": "npx eslint --fix",
     "ts-test": "tsc --noEmit",
-    "start-server": "tsx ./src/server.ts",
+    "start-server": "nodemon ./src/server.ts",
     "test": "playwright test"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "koa-bodyparser": "^4.4.1",
     "koa-qs": "^3.0.0",
     "mongodb": "^7.0.0",
+    "nodemon": "^3.1.11",
     "tsx": "^4.21.0",
     "zod": "^4.2.1"
   },

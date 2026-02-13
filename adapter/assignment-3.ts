@@ -18,11 +18,31 @@ export interface Filter {
   author?: string
 };
 
-// If multiple filters are provided, any book that matches at least one of them should be returned
-// Within a single filter, a book would need to match all the given conditions
 async function listBooks (filters?: Filter[]): Promise<Book[]> {
-  console.log(filters)
-  throw new Error("Todo")
+  const query = filters?.map(({ from, to, name, author }, index) => {
+    let result = ''
+    if (typeof from === 'number') {
+      result += `&filters[${index}][from]=${from}`
+    }
+    if (typeof to === 'number') {
+      result += `&filters[${index}][to]=${to}`
+    }
+    if (typeof name === 'string' && name.trim().length > 0) {
+      result += `&filters[${index}][name]=${name.trim()}`
+    }
+    if (typeof author === 'string' && author.trim().length > 0) {
+      result += `&filters[${index}][author]=${author.trim()}`
+    }
+    return result
+  }).join('&') ?? ''
+
+  const res=await fetch(`http://localhost:3000/books?${query}`)
+  if (res.ok) {
+    return (await res.json() as Book[])
+  } else {
+    console.warn(await res.text())
+    throw new Error(`fetching "${query}" failed.`)
+  }
 }
 
 async function createOrUpdateBook (book: Book): Promise<BookID> {
