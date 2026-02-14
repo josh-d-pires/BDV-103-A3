@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "This is a template repository for the first assignment in BVD 103 at McMaster Continuing Education.",
   "main": "src/server.ts",
+  "type": "module",
   "scripts": {
     "lint": "npx eslint",
     "lint-fix": "npx eslint --fix",
     "ts-test": "tsc --noEmit",
     "start-server": "nodemon ./src/server.ts",
-    "test": "playwright test"
+    "test": "vitest",
+    "test:ci": "vitest run"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +40,7 @@
     "jiti": "^2.6.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.54.0"
+    "typescript-eslint": "^8.54.0",
+    "vitest": "^4.0.18"
   }
 }

@@ -4,10 +4,10 @@ import { Book } from '../adapter/assignment-1';
 
 const API_URL = 'http://localhost:3000';
 
-test.describe('Books API', () => {
+/*test.*/describe('Books API', () => {
     let createdBookId: string;
 
-    test.describe('GET /books', () => {
+    /*test.*/describe('GET /books', () => {
         test('should return an array of books', async ({ request }) => {
             const response = await request.get(`${API_URL}/books`);
             expect(response.ok()).toBeTruthy();
@@ -17,7 +17,7 @@ test.describe('Books API', () => {
         });
     });
 
-    test.describe('POST /books', () => {
+    /*test.*/describe('POST /books', () => {
         test('should create a new book', async ({ request }) => {
             const newBook = {
                 name: 'Test Book',
@@ -111,7 +111,7 @@ test.describe('Books API', () => {
         });
     });
 
-    test.describe('PUT /books/:id', () => {
+    /*test.*/describe('PUT /books/:id', () => {
         test('should update an existing book', async ({ request }) => {
             const updatedBook = {
                 name: 'Updated Book',
@@ -176,7 +176,7 @@ test.describe('Books API', () => {
         });
     });
 
-    test.describe('DELETE /books/:id', () => {
+    /*test.*/describe('DELETE /books/:id', () => {
         test('should reject delete with invalid ID format', async ({ request }) => {
             const response = await request.delete(`${API_URL}/books/invalid-id`);
 
