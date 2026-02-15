@@ -21,18 +21,14 @@ export interface Filter {
 async function listBooks (filters?: Filter[]): Promise<Book[]> {
   const query = filters?.map(({ from, to, name, author }, index) => {
     let result = ''
-    if (typeof from === 'number') {
+    if (typeof from === 'number')
       result += `&filters[${index}][from]=${from}`
-    }
-    if (typeof to === 'number') {
+    if (typeof to === 'number')
       result += `&filters[${index}][to]=${to}`
-    }
-    if (typeof name === 'string' && name.trim().length > 0) {
+    if (typeof name === 'string' && name.trim().length > 0)
       result += `&filters[${index}][name]=${name.trim()}`
-    }
-    if (typeof author === 'string' && author.trim().length > 0) {
+    if (typeof author === 'string' && author.trim().length > 0)
       result += `&filters[${index}][author]=${author.trim()}`
-    }
     return result
   }).join('&') ?? ''
 

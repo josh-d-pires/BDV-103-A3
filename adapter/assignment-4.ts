@@ -33,7 +33,21 @@ async function removeBook (book: BookID): Promise<void> {
 }
 
 async function lookupBookById (book: BookID): Promise<Book> {
-  throw new Error("Todo")
+  console.log('getBookById')
+  if (validId(book)) {
+    const res=await fetch(`http://localhost:3000/bookById/${book}`)
+    if (res.ok) {
+      return (await res.json() as Book)
+    } else {
+      console.warn(await res.text())
+      throw new Error(`fetching book: ${book} failed`)
+    }
+  } else {
+    throw new Error("invalid book id")
+  }
+  function validId(book) {
+    return true
+  }
 }
 
 export type ShelfId = string

@@ -1,17 +1,44 @@
 import Router from '@koa/router';
 import { Book } from '../../adapter/assignment-1';
 import { getDatabase } from '../db';
+import { ObjectId } from 'mongodb';
 // import { constrainedMemory } from 'node:process';
 
 const listRouter = new Router();
 
+listRouter.get('/bookById/:id', async (ctx) => {
+  try {
+    const db=getDatabase(),
+          id=ctx.params.id
+    if (!ObjectId.isValid(id)) {
+      ctx.status=400
+      ctx.body={error:'invalid id'}
+      return
+    }
+    const res=await db.collection('books').findOne({_id:new ObjectId(id)})
+    if (res == null) {
+      ctx.status=404
+      ctx.body={error:`${id} was not found`}
+      return
+    }
+    ctx.status=200
+    ctx.body=res
+  } catch (err) {
+    ctx.status=500
+    ctx.body={error:`lookup failed: ${err}`}
+  }
+});
+
+
 listRouter.get('/books', async (ctx) => {
-  console.log(ctx.query.filters)
+  // console.log(ctx.query.filters)
   const filters = ctx.query.filters as Array<{ from?: string, to?: string }> | undefined;
 
   try {
     let bookList = await getBooksFromDatabase();
-
+    const db = getDatabase();
+    const books = await db.collection('books').find({}).toArray();
+    console.log(books)
     if (filters && Array.isArray(filters) && filters.length > 0) {
       if (!validateFilters(filters)) {
         ctx.status = 400;
@@ -20,6 +47,7 @@ listRouter.get('/books', async (ctx) => {
       }
       bookList = filterBooks(bookList, filters);
     }
+    ctx.status=200
     ctx.body = bookList;
   } catch (error) {
     ctx.status = 500;
